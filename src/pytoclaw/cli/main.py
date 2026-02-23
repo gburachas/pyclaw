@@ -60,6 +60,26 @@ def version() -> None:
     console.print(f"pytoclaw v{__version__}")
 
 
+@app.command()
+def gateway(
+    config: str = typer.Option(None, "--config", "-c", help="Path to config file"),
+) -> None:
+    """Start multi-channel gateway server."""
+    from pytoclaw.cli.gateway_cmd import run_gateway
+
+    asyncio.run(run_gateway(config_path=config))
+
+
+# Register sub-command groups
+from pytoclaw.cli.auth_cmd import auth_app
+from pytoclaw.cli.cron_cmd import cron_app
+from pytoclaw.cli.skills_cmd import skills_app
+
+app.add_typer(auth_app)
+app.add_typer(cron_app)
+app.add_typer(skills_app)
+
+
 def main() -> None:
     app()
 
