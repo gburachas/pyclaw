@@ -47,32 +47,23 @@ def run_onboard() -> None:
     console.print("\n[bold cyan]Step 1: About you[/bold cyan]\n")
 
     user_name = Prompt.ask("What's your name?", default="User")
-    user_role = Prompt.ask(
-        "What do you primarily do?",
-        choices=["software engineer", "researcher", "student", "creative", "other"],
-        default="software engineer",
-    )
+    console.print("[dim]  Tell the agent about yourself — role, interests, expertise, anything.[/dim]")
+    user_role = Prompt.ask("Describe yourself", default="software engineer")
     user_address = Prompt.ask(
         "How should the agent address you?",
         default=user_name,
     )
 
     # ── Step 2: Agent personality ──────────────────────────────────────
-    console.print("\n[bold cyan]Step 2: Agent personality[/bold cyan]\n")
+    console.print("\n[bold cyan]Step 2: Your agent[/bold cyan]\n")
 
     agent_name = Prompt.ask("Name your agent", default="pytoclaw")
-    personality = Prompt.ask(
-        "Agent personality style",
-        choices=["concise", "friendly", "professional", "playful"],
-        default="concise",
-    )
-    use_case = Prompt.ask(
-        "Primary use case",
-        choices=["coding", "research", "writing", "general assistant", "devops"],
-        default="coding",
-    )
+    console.print("[dim]  Describe the personality you want — e.g. 'concise and technical', 'friendly mentor', etc.[/dim]")
+    personality = Prompt.ask("Agent personality", default="concise and direct")
+    console.print("[dim]  What will you use this agent for? Be as specific as you like.[/dim]")
+    use_case = Prompt.ask("Primary use case", default="coding")
     extra_instructions = Prompt.ask(
-        "Any special instructions for the agent? (optional, press Enter to skip)",
+        "Any special instructions for the agent? (optional, Enter to skip)",
         default="",
     )
 
@@ -92,17 +83,12 @@ def run_onboard() -> None:
     default_model = _default_model(provider)
     valid = _VALID_MODELS.get(provider, [])
     if valid:
-        console.print(f"  Available models: {', '.join(valid)}")
+        console.print(f"  [dim]Known models: {', '.join(valid)}[/dim]")
     model = Prompt.ask("Default model", default=default_model)
 
-    # Validate model name
-    if provider == "openai" and model not in valid:
-        console.print(f"[yellow]Warning: '{model}' may not be a valid OpenAI model.[/yellow]")
-        console.print(f"  Known models: {', '.join(valid)}")
-        confirm = Prompt.ask("Use it anyway?", choices=["y", "n"], default="n")
-        if confirm != "y":
-            model = default_model
-            console.print(f"  Using default: {model}")
+    # Warn on unknown model but don't block
+    if valid and model not in valid:
+        console.print(f"[yellow]Note: '{model}' isn't in the known models list — using it anyway.[/yellow]")
 
     # ── Build config ───────────────────────────────────────────────────
     cfg = Config()
@@ -144,11 +130,10 @@ def run_onboard() -> None:
     console.print(Panel(
         f"[green]Config saved:[/green]  {config_file}\n"
         f"[green]Workspace:[/green]     {workspace}\n"
-        f"[green]Agent name:[/green]    {agent_name}\n"
-        f"[green]Personality:[/green]   {personality}\n"
+        f"[green]Agent:[/green]         {agent_name} — {personality}\n"
         f"[green]Use case:[/green]      {use_case}\n"
         f"[green]Model:[/green]         {model}\n"
-        f"[green]User:[/green]          {user_name} ({user_role})",
+        f"[green]User:[/green]          {user_name} — {user_role}",
         title="Setup Complete",
     ))
     console.print("\nRun [bold]pytoclaw agent[/bold] to start chatting!")
@@ -173,47 +158,29 @@ def _build_identity(agent_name: str, use_case: str) -> str:
 
 I am {agent_name}, a personal AI assistant built with pytoclaw.
 Version: 0.1.0
-Primary role: {use_case} assistant
+Primary focus: {use_case}
 """
 
 
 def _build_soul(personality: str, use_case: str) -> str:
-    traits = {
-        "concise": "I am concise and direct. I get to the point quickly without unnecessary preamble. I value clarity and efficiency in communication.",
-        "friendly": "I am warm and approachable. I communicate in a friendly, conversational tone while staying helpful and informative.",
-        "professional": "I am professional and thorough. I provide well-structured, detailed responses and maintain a formal but approachable tone.",
-        "playful": "I am creative and lighthearted. I bring energy to conversations while staying helpful and accurate.",
-    }
-    use_case_notes = {
-        "coding": "I excel at writing clean, correct code. I read before I edit, I explain my reasoning, and I test my work.",
-        "research": "I excel at finding, synthesizing, and presenting information. I cite sources and distinguish facts from opinions.",
-        "writing": "I excel at crafting clear, engaging text. I adapt my writing style to the context and audience.",
-        "general assistant": "I am versatile and adaptable. I handle a wide range of tasks from scheduling to analysis to creative work.",
-        "devops": "I excel at infrastructure, automation, and operational tasks. I prioritize reliability and security.",
-    }
     return f"""# Soul
 
-{traits.get(personality, traits['concise'])}
+{personality}
 
-{use_case_notes.get(use_case, '')}
+I focus on: {use_case}
 """
 
 
 def _build_agent(use_case: str, extra_instructions: str) -> str:
-    base = """# Agent Instructions
+    result = f"""# Agent Instructions
+
+Primary focus: {use_case}
 
 - Use tools to accomplish tasks rather than just describing what to do.
 - Read files before modifying them.
 - Be concise in responses.
 - Remember important facts in MEMORY.md.
 """
-    use_case_extras = {
-        "coding": "- Prefer editing existing files over creating new ones.\n- Run tests after making changes.\n- Follow the project's existing style and conventions.\n",
-        "research": "- Search the web for current information.\n- Cross-reference multiple sources.\n- Note the date and source of information.\n",
-        "writing": "- Ask for clarification on tone and audience.\n- Offer revisions rather than rewriting from scratch.\n",
-        "devops": "- Always check current state before making changes.\n- Prefer non-destructive operations.\n- Back up configurations before modifying them.\n",
-    }
-    result = base + use_case_extras.get(use_case, "")
     if extra_instructions:
         result += f"\n## Custom Instructions\n\n{extra_instructions}\n"
     return result
@@ -224,5 +191,5 @@ def _build_user(user_name: str, address_as: str, role: str) -> str:
 
 Name: {user_name}
 Address as: {address_as}
-Role: {role}
+About: {role}
 """
