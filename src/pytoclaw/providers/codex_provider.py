@@ -217,7 +217,7 @@ class CodexProvider(LLMProvider):
 
         return LLMResponse(
             content=content,
-            tool_calls=tool_call_list if tool_call_list else None,
+            tool_calls=tool_call_list,
             usage=usage,
             finish_reason=finish_reason,
         )

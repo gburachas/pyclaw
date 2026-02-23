@@ -82,7 +82,7 @@ async def stream_openai_response(
 
     return LLMResponse(
         content=content,
-        tool_calls=tool_calls if tool_calls else None,
+        tool_calls=tool_calls,
         usage=None,  # Usage not available in streaming mode for most providers
         finish_reason="tool_calls" if tool_calls else "stop",
     )
@@ -155,7 +155,7 @@ async def stream_anthropic_response(
 
     return LLMResponse(
         content=content,
-        tool_calls=tool_calls if tool_calls else None,
+        tool_calls=tool_calls,
         usage=usage,
         finish_reason="tool_use" if tool_calls else "end_turn",
     )
