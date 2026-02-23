@@ -287,23 +287,24 @@ def _convert_messages(messages: list[Message]) -> list[dict[str, Any]]:
             result.append({"role": "user", "content": msg.content})
 
         elif msg.role == "assistant":
-            entry: dict[str, Any] = {"role": "assistant"}
-            content = []
+            # Text content goes in the assistant message
             if msg.content:
-                content.append({"type": "output_text", "text": msg.content})
+                result.append({
+                    "role": "assistant",
+                    "content": [{"type": "output_text", "text": msg.content}],
+                })
+            # Function calls are top-level input items (not nested in content)
             if msg.tool_calls:
                 for tc in msg.tool_calls:
                     fn = tc.function
                     if fn:
-                        content.append({
+                        result.append({
                             "type": "function_call",
                             "id": tc.id,
                             "call_id": tc.id,
                             "name": fn.name,
                             "arguments": fn.arguments or "{}",
                         })
-            entry["content"] = content
-            result.append(entry)
 
         elif msg.role == "tool":
             result.append({
