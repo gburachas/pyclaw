@@ -2,8 +2,8 @@
 
 import pytest
 
-from pytoclaw.bus.message_bus import MessageBus
-from pytoclaw.models import InboundMessage, OutboundMessage
+from pyclaw.bus.message_bus import MessageBus
+from pyclaw.models import InboundMessage, OutboundMessage
 
 
 @pytest.mark.asyncio

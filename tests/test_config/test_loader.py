@@ -6,7 +6,7 @@ from pathlib import Path
 
 import yaml
 
-from pytoclaw.config.loader import load_config
+from pyclaw.config.loader import load_config
 
 
 def test_load_yaml_config():

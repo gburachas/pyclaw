@@ -1,6 +1,6 @@
 """Tests for configuration models."""
 
-from pytoclaw.config.models import AgentDefaults, Config
+from pyclaw.config.models import AgentDefaults, Config
 
 
 def test_config_defaults():
@@ -28,5 +28,5 @@ def test_config_from_dict():
 
 
 def test_agent_defaults_workspace_expansion():
-    defaults = AgentDefaults(workspace="~/.pytoclaw/workspace")
+    defaults = AgentDefaults(workspace="~/.pyclaw/workspace")
     assert "~" in defaults.workspace  # Raw, not expanded — expansion happens in AgentInstance

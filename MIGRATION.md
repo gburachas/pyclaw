@@ -1,31 +1,31 @@
-# Migration Guide: PicoClaw (Go) → pytoclaw (Python)
+# Migration Guide: PicoClaw (Go) → pyclaw (Python)
 
-This guide helps existing PicoClaw (Go) users migrate to pytoclaw.
+This guide helps existing PicoClaw (Go) users migrate to pyclaw.
 
 ## What Changed
 
-| Aspect | Go (PicoClaw) | Python (pytoclaw) |
+| Aspect | Go (PicoClaw) | Python (pyclaw) |
 |--------|---------------|-------------------|
-| Binary | Single `picoclaw` binary | `pip install pytoclaw` or Docker |
+| Binary | Single `picoclaw` binary | `pip install pyclaw` or Docker |
 | Config format | `config.json` | `config.yaml` (YAML preferred, JSON still supported) |
-| Config location | `~/.picoclaw/config.json` | `~/.pytoclaw/config.yaml` |
-| Workspace | `~/.picoclaw/workspace/` | `~/.pytoclaw/workspace/` |
+| Config location | `~/.picoclaw/config.json` | `~/.pyclaw/config.yaml` |
+| Workspace | `~/.picoclaw/workspace/` | `~/.pyclaw/workspace/` |
 | CLI framework | Cobra | Typer |
 | Package manager | Go modules | pip/pipx |
 
 ## Step-by-Step Migration
 
-### 1. Install pytoclaw
+### 1. Install pyclaw
 
 ```bash
-pip install pytoclaw
+pip install pyclaw
 
 # Or with channel support
-pip install pytoclaw[telegram,discord,slack]
+pip install pyclaw[telegram,discord,slack]
 
 # Or from source
-git clone https://github.com/gburachas/pytoclaw.git
-cd pytoclaw && pip install -e ".[dev,telegram,discord,slack]"
+git clone https://github.com/gburachas/pyclaw.git
+cd pyclaw && pip install -e ".[dev,telegram,discord,slack]"
 ```
 
 ### 2. Convert Configuration
@@ -57,7 +57,7 @@ Your Go `config.json` needs to be converted to YAML format. The structure is sim
 }
 ```
 
-**pytoclaw config.yaml (after):**
+**pyclaw config.yaml (after):**
 ```yaml
 providers:
   default: "anthropic/claude-sonnet-4-20250514"
@@ -86,7 +86,7 @@ Your workspace files (IDENTITY.md, SOUL.md, memory, sessions, skills) are fully 
 
 ```bash
 # Copy workspace to new location
-cp -r ~/.picoclaw/workspace/ ~/.pytoclaw/workspace/
+cp -r ~/.picoclaw/workspace/ ~/.pyclaw/workspace/
 ```
 
 These files work unchanged:
@@ -112,14 +112,14 @@ Environment variables remain the same:
 
 | Go Command | Python Command | Notes |
 |-----------|---------------|-------|
-| `picoclaw` | `pytoclaw agent` | Interactive chat |
-| `picoclaw onboard` | `pytoclaw onboard` | Same |
-| `picoclaw gateway` | `pytoclaw gateway` | Same |
-| `picoclaw status` | `pytoclaw status` | Same |
-| `picoclaw version` | `pytoclaw version` | Same |
-| `picoclaw auth login` | `pytoclaw auth login` | Same |
-| `picoclaw cron list` | `pytoclaw cron list` | Same |
-| `picoclaw skills list` | `pytoclaw skills list` | Same |
+| `picoclaw` | `pyclaw agent` | Interactive chat |
+| `picoclaw onboard` | `pyclaw onboard` | Same |
+| `picoclaw gateway` | `pyclaw gateway` | Same |
+| `picoclaw status` | `pyclaw status` | Same |
+| `picoclaw version` | `pyclaw version` | Same |
+| `picoclaw auth login` | `pyclaw auth login` | Same |
+| `picoclaw cron list` | `pyclaw cron list` | Same |
+| `picoclaw skills list` | `pyclaw skills list` | Same |
 
 ### 6. Docker Migration
 
@@ -130,10 +130,10 @@ docker run --rm -v ~/.picoclaw:/root/.picoclaw picoclaw:latest
 
 **Python (after):**
 ```bash
-docker run --rm -v ~/.pytoclaw:/root/.pytoclaw pytoclaw:latest
+docker run --rm -v ~/.pyclaw:/root/.pyclaw pyclaw:latest
 ```
 
-## What's New in pytoclaw
+## What's New in pyclaw
 
 Features added in the Python port:
 
@@ -144,7 +144,7 @@ Features added in the Python port:
 
 ## Known Differences
 
-1. **No single binary** — pytoclaw requires Python 3.11+ runtime (use Docker for isolation)
+1. **No single binary** — pyclaw requires Python 3.11+ runtime (use Docker for isolation)
 2. **Startup time** — Slightly slower than Go binary (~1-2s vs instant)
 3. **Memory usage** — Higher baseline (~30-50 MB vs ~10 MB)
 4. **GitHub Copilot provider** — Not yet ported (P2 priority)
@@ -153,13 +153,13 @@ Features added in the Python port:
 ## Troubleshooting
 
 **Q: My sessions don't load?**
-A: Session JSON format is compatible. Ensure you copied `~/.picoclaw/workspace/sessions/` to `~/.pytoclaw/workspace/sessions/`.
+A: Session JSON format is compatible. Ensure you copied `~/.picoclaw/workspace/sessions/` to `~/.pyclaw/workspace/sessions/`.
 
 **Q: Provider fails to connect?**
-A: Check that API keys are set in your environment. Run `pytoclaw auth login` to reconfigure.
+A: Check that API keys are set in your environment. Run `pyclaw auth login` to reconfigure.
 
 **Q: Channel not starting?**
-A: Install channel dependencies: `pip install pytoclaw[telegram]` (or discord, slack).
+A: Install channel dependencies: `pip install pyclaw[telegram]` (or discord, slack).
 
 **Q: Config validation errors?**
-A: Field names changed to snake_case. Run `pytoclaw onboard` to generate a fresh config.
+A: Field names changed to snake_case. Run `pyclaw onboard` to generate a fresh config.

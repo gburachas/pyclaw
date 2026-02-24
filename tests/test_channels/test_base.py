@@ -2,9 +2,9 @@
 
 import pytest
 
-from pytoclaw.bus.message_bus import MessageBus
-from pytoclaw.channels.base import BaseChannel, ChannelManager
-from pytoclaw.models import OutboundMessage
+from pyclaw.bus.message_bus import MessageBus
+from pyclaw.channels.base import BaseChannel, ChannelManager
+from pyclaw.models import OutboundMessage
 
 
 @pytest.fixture

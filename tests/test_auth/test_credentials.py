@@ -3,8 +3,8 @@
 import time
 import pytest
 
-from pytoclaw.auth.credentials import CredentialStore, StoredCredential
-from pytoclaw.auth.openai_oauth import OAuthCredentials
+from pyclaw.auth.credentials import CredentialStore, StoredCredential
+from pyclaw.auth.openai_oauth import OAuthCredentials
 
 
 def test_store_and_get_api_key(tmp_path):

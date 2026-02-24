@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from pytoclaw.services.heartbeat import HeartbeatService
+from pyclaw.services.heartbeat import HeartbeatService
 
 
 def test_creates_default_heartbeat_file(tmp_path):

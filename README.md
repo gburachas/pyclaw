@@ -1,4 +1,4 @@
-# pytoclaw
+# pyclaw
 
 Ultra-lightweight personal AI assistant — Python port of [PicoClaw](https://github.com/sipeed/picoclaw).
 
@@ -19,8 +19,8 @@ Ultra-lightweight personal AI assistant — Python port of [PicoClaw](https://gi
 ### From source (recommended for development)
 
 ```bash
-git clone https://github.com/gburachas/pytoclaw.git
-cd pytoclaw
+git clone https://github.com/gburachas/pyclaw.git
+cd pyclaw
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev,telegram,discord,slack]"
@@ -29,51 +29,51 @@ pip install -e ".[dev,telegram,discord,slack]"
 ### pip install
 
 ```bash
-pip install pytoclaw
+pip install pyclaw
 ```
 
 ### With specific channel support
 
 ```bash
 # Telegram only
-pip install pytoclaw[telegram]
+pip install pyclaw[telegram]
 
 # Discord only
-pip install pytoclaw[discord]
+pip install pyclaw[discord]
 
 # Slack only
-pip install pytoclaw[slack]
+pip install pyclaw[slack]
 
 # All channels
-pip install pytoclaw[telegram,discord,slack]
+pip install pyclaw[telegram,discord,slack]
 ```
 
 ### Docker
 
 ```bash
-docker build -t pytoclaw:latest .
-docker run --rm -v ~/.pytoclaw:/root/.pytoclaw pytoclaw:latest
+docker build -t pyclaw:latest .
+docker run --rm -v ~/.pyclaw:/root/.pyclaw pyclaw:latest
 ```
 
 ## Quick Start
 
 ```bash
 # First-time setup — creates workspace, configures provider
-pytoclaw onboard
+pyclaw onboard
 
 # Interactive chat
-pytoclaw agent
+pyclaw agent
 
 # One-shot mode
-pytoclaw agent "What files are in the current directory?"
+pyclaw agent "What files are in the current directory?"
 
 # Start multi-channel gateway
-pytoclaw gateway
+pyclaw gateway
 ```
 
 ## Configuration
 
-pytoclaw uses YAML configuration. Default location: `~/.pytoclaw/config.yaml`
+pyclaw uses YAML configuration. Default location: `~/.pyclaw/config.yaml`
 
 ```yaml
 providers:
@@ -91,7 +91,7 @@ agents:
   list:
     - name: main
       model: "anthropic/claude-sonnet-4-20250514"
-      workspace: ~/.pytoclaw/workspace
+      workspace: ~/.pyclaw/workspace
 
 channels:
   telegram:
@@ -109,16 +109,16 @@ tools:
 
 | Command | Description |
 |---------|-------------|
-| `pytoclaw onboard` | First-run setup wizard |
-| `pytoclaw agent [MESSAGE]` | Interactive chat or one-shot mode |
-| `pytoclaw gateway` | Start multi-channel gateway server |
-| `pytoclaw status` | Show agent/provider status |
-| `pytoclaw version` | Show version |
-| `pytoclaw auth login` | Add provider credentials |
-| `pytoclaw auth logout` | Remove provider credentials |
-| `pytoclaw cron list` | List scheduled jobs |
-| `pytoclaw cron add` | Add a cron job |
-| `pytoclaw skills list` | List installed skills |
+| `pyclaw onboard` | First-run setup wizard |
+| `pyclaw agent [MESSAGE]` | Interactive chat or one-shot mode |
+| `pyclaw gateway` | Start multi-channel gateway server |
+| `pyclaw status` | Show agent/provider status |
+| `pyclaw version` | Show version |
+| `pyclaw auth login` | Add provider credentials |
+| `pyclaw auth logout` | Remove provider credentials |
+| `pyclaw cron list` | List scheduled jobs |
+| `pyclaw cron add` | Add a cron job |
+| `pyclaw skills list` | List installed skills |
 
 ### In-Chat Slash Commands
 
@@ -185,7 +185,7 @@ make clean
 ## Project Structure
 
 ```
-src/pytoclaw/
+src/pyclaw/
 ├── models.py              # Core Pydantic data models
 ├── protocols.py           # Abstract interfaces (LLMProvider, Tool, Channel)
 ├── config/                # YAML/JSON config loading

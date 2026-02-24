@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from pytoclaw.tools.file_tools import (
+from pyclaw.tools.file_tools import (
     AppendFileTool,
     EditFileTool,
     ListDirTool,
@@ -48,12 +48,12 @@ async def test_edit_file(workspace):
     result = await edit.execute({
         "path": "test.txt",
         "old_string": "world",
-        "new_string": "pytoclaw",
+        "new_string": "pyclaw",
     })
     assert not result.is_error
 
     result = await read.execute({"path": "test.txt"})
-    assert result.for_llm == "hello pytoclaw"
+    assert result.for_llm == "hello pyclaw"
 
 
 @pytest.mark.asyncio

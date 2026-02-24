@@ -3,7 +3,7 @@
 import os
 import pytest
 
-from pytoclaw.tools.ast_tool import ASTAnalyzeTool
+from pyclaw.tools.ast_tool import ASTAnalyzeTool
 
 
 @pytest.fixture

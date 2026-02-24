@@ -1,6 +1,6 @@
 """Tests for OpenAI OAuth utilities."""
 
-from pytoclaw.auth.openai_oauth import (
+from pyclaw.auth.openai_oauth import (
     _decode_jwt_payload,
     _extract_account_id,
     _parse_auth_input,

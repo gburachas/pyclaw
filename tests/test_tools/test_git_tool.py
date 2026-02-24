@@ -3,7 +3,7 @@
 import os
 import pytest
 
-from pytoclaw.tools.git_tool import GitTool
+from pyclaw.tools.git_tool import GitTool
 
 
 @pytest.fixture

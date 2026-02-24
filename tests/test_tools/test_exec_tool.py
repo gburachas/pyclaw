@@ -2,7 +2,7 @@
 
 import pytest
 
-from pytoclaw.tools.exec_tool import ExecTool
+from pyclaw.tools.exec_tool import ExecTool
 
 
 @pytest.fixture

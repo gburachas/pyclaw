@@ -1,6 +1,6 @@
 """Tests for session manager."""
 
-from pytoclaw.session.manager import SessionManager
+from pyclaw.session.manager import SessionManager
 
 
 def test_get_or_create(tmp_path):

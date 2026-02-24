@@ -1,8 +1,8 @@
 """Tests for route resolver."""
 
-from pytoclaw.config.models import AgentBinding, BindingMatch, Config, PeerMatch
-from pytoclaw.models import RouteInput, RoutePeer
-from pytoclaw.routing.resolver import RouteResolver
+from pyclaw.config.models import AgentBinding, BindingMatch, Config, PeerMatch
+from pyclaw.models import RouteInput, RoutePeer
+from pyclaw.routing.resolver import RouteResolver
 
 
 def test_default_route():

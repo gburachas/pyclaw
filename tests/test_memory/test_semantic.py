@@ -2,7 +2,7 @@
 
 import pytest
 
-from pytoclaw.memory.semantic import SemanticMemory, _cosine_similarity, _hash_embedding
+from pyclaw.memory.semantic import SemanticMemory, _cosine_similarity, _hash_embedding
 
 
 def test_hash_embedding_deterministic():

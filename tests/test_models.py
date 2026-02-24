@@ -1,6 +1,6 @@
 """Tests for core data models."""
 
-from pytoclaw.models import (
+from pyclaw.models import (
     FunctionCall,
     InboundMessage,
     LLMResponse,

@@ -6,17 +6,17 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends gcc && \
     rm -rf /var/lib/apt/lists/*
 
-# Install pytoclaw
+# Install pyclaw
 COPY pyproject.toml README.md ./
 COPY src/ src/
 RUN pip install --no-cache-dir .
 
 # Create workspace
-RUN mkdir -p /root/.pytoclaw/workspace/memory \
-             /root/.pytoclaw/workspace/sessions \
-             /root/.pytoclaw/workspace/skills
+RUN mkdir -p /root/.pyclaw/workspace/memory \
+             /root/.pyclaw/workspace/sessions \
+             /root/.pyclaw/workspace/skills
 
 EXPOSE 8080
 
-ENTRYPOINT ["pytoclaw"]
+ENTRYPOINT ["pyclaw"]
 CMD ["gateway"]

@@ -2,7 +2,7 @@
 
 import time
 
-from pytoclaw.services.cron_service import CronService
+from pyclaw.services.cron_service import CronService
 
 
 def test_add_and_list_jobs(tmp_path):

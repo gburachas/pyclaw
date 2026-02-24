@@ -3,7 +3,7 @@
 import base64
 import hashlib
 
-from pytoclaw.auth.pkce import generate_pkce
+from pyclaw.auth.pkce import generate_pkce
 
 
 def test_pkce_generates_different_values():

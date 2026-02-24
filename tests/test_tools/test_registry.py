@@ -4,9 +4,9 @@ from typing import Any
 
 import pytest
 
-from pytoclaw.models import ToolResult
-from pytoclaw.protocols import Tool
-from pytoclaw.tools.registry import ToolRegistry
+from pyclaw.models import ToolResult
+from pyclaw.protocols import Tool
+from pyclaw.tools.registry import ToolRegistry
 
 
 class DummyTool(Tool):

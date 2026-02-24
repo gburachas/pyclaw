@@ -28,10 +28,10 @@ jobs:
         run: ruff check src/ tests/
 
       - name: Type check
-        run: mypy src/pytoclaw/ --ignore-missing-imports
+        run: mypy src/pyclaw/ --ignore-missing-imports
 
       - name: Test
-        run: pytest tests/ -v --cov=pytoclaw --cov-report=term-missing
+        run: pytest tests/ -v --cov=pyclaw --cov-report=term-missing
 
   docker:
     runs-on: ubuntu-latest
@@ -42,4 +42,4 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t pytoclaw:latest .
+        run: docker build -t pyclaw:latest .
